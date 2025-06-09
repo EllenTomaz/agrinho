@@ -3,54 +3,268 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Festa Junina</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Receitas Típicas do Campo e da Cidade</title>
+  <style>
+    :root {
+      --cor-campo: #a0d995;
+      --cor-cidade: #7bb4f0;
+      --cor-fundo: #fffaf0;
+      --cor-texto: #333;
+      --cor-card-campo: #e6f5e9;
+      --cor-card-cidade: #e6f0fa;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--cor-fundo);
+      color: var(--cor-texto);
+      padding: 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2.8em;
+      margin-bottom: 10px;
+      color: #5a2d82;
+    }
+
+    header p {
+      font-size: 1.2em;
+      color: #555;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    nav button {
+      padding: 10px 25px;
+      border: none;
+      border-radius: 30px;
+      background-color: var(--cor-cidade);
+      color: white;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    nav button:hover {
+      background-color: #5fa0e0;
+    }
+
+    nav button.active {
+      background-color: var(--cor-campo);
+      color: #222;
+    }
+
+    .receitas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card.campo {
+      background-color: var(--cor-card-campo);
+    }
+
+    .card.cidade {
+      background-color: var(--cor-card-cidade);
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .card h2 {
+      font-size: 1.3em;
+      color: #444;
+      margin-bottom: 5px;
+    }
+
+    .card small {
+      color: #666;
+    }
+
+    .card p {
+      margin-top: 10px;
+    }
+
+    .adicionar {
+      max-width: 600px;
+      margin: 50px auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .adicionar h2 {
+      margin-bottom: 20px;
+      color: #5a2d82;
+      text-align: center;
+    }
+
+    .adicionar input,
+    .adicionar textarea,
+    .adicionar select,
+    .adicionar button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1em;
+    }
+
+    .adicionar button {
+      background-color: var(--cor-campo);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .adicionar button:hover {
+      background-color: #85c580;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <h1>Festa Junina: Tradição e Alegria</h1>
+    <h1>Receitas Típicas do Campo e da Cidade</h1>
+    <p>Descubra e compartilhe receitas autênticas do Brasil rural e urbano</p>
   </header>
-<img src="quadrilha-og.webp"
 
-  <section id="sobre">
-    <h2>O que é a Festa Junina?</h2>
-    <p>A Festa Junina é uma celebração popular brasileira que ocorre no mês de junho, em homenagem a santos como Santo Antônio, São João e São Pedro. Caracteriza-se por danças típicas como a quadrilha, comidas deliciosas como milho verde, canjica e pé-de-moleque, além de brincadeiras tradicionais.</p>
+  <nav>
+    <button onclick="filtrar('todas')" class="active">Todas</button>
+    <button onclick="filtrar('campo')">Campo</button>
+    <button onclick="filtrar('cidade')">Cidade</button>
+  </nav>
+
+  <section class="receitas" id="lista-receitas"></section>
+
+  <section class="adicionar">
+    <h2>Adicionar Nova Receita</h2>
+    <input type="text" id="titulo" placeholder="Título da receita">
+    <input type="text" id="imagem" placeholder="URL da imagem (opcional)">
+    <textarea id="descricao" placeholder="Descrição da receita"></textarea>
+    <select id="origem">
+      <option value="campo">Campo</option>
+      <option value="cidade">Cidade</option>
+    </select>
+    <button onclick="adicionarReceita()">Adicionar Receita</button>
   </section>
 
-<section id="origem">
-  <h2>Origem</h2>
-  <p>A Festa Junina tem origem em tradições pagãs europeias, que celebravam
-     o solstício de verão e a transição entre primavera e verão. Com a
-      cristianização, a Igreja Católica adaptou essas festas, associando-as à
-       celebração dos santos João Batista, Santo Antônio e São Pedro, que são
-        comemorados em junho. No Brasil, a tradição foi trazida pelos colonizadores
-         portugueses no século XVI, e ao longo do tempo, incorporou elementos
-          indígenas e africanos, transformando-se na festa junina que conhecemos hoje. </p>
-</section>
-  
-  <section id="tradições">
-    <h2>Tradições Juninas</h2>
-    <ul>
-      <li>Quadrilha: dança típica em que casais formam pares e seguem passos coreografados.</li>
-      <li>Comidas típicas: milho verde, canjica, quentão, pé-de-moleque, entre outras.</li>
-      <li>Decoração com bandeirinhas coloridas e fogueiras.</li>
-      <li>Brincadeiras como pescaria, boca do palhaço e correio elegante.</li>
-    </ul>
-  </section>
+  <script>
+    let receitas = [
+      {
+        titulo: "Pamonha Doce",
+        origem: "campo",
+        descricao: "Pamonha cremosa feita com milho fresco ralado e cozido na palha.",
+        imagem: "https://www.receiteria.com.br/wp-content/uploads/receitas-de-pamonha-doce-0.jpg"
+      },
+      {
+        titulo: "Feijão Tropeiro",
+        origem: "campo",
+        descricao: "Tradicional prato mineiro com feijão, farinha, linguiça e couve.",
+        imagem: "https://cdn.panelinha.com.br/receita/962014000000-Feijao-tropeiro.jpg"
+      },
+      {
+        titulo: "Galinhada Caipira",
+        origem: "campo",
+        descricao: "Arroz cozido com pedaços de frango caipira e temperos naturais.",
+        imagem: "https://www.receitasnestle.com.br/sites/default/files/srh_recipes/22f430aa6ec24ef0a61a3019173a18b0.jpg"
+      },
+      {
+        titulo: "Cachorro-Quente",
+        origem: "cidade",
+        descricao: "Salsicha com molho, milho, batata palha e pão macio.",
+        imagem: "https://static.itdg.com.br/images/1200-675/9b2db4fe8e73b90b4c09bc822842d768/353473-original.jpg"
+      },
+      {
+        titulo: "Pizza Paulistana",
+        origem: "cidade",
+        descricao: "Massa fina, molho de tomate e recheios variados, típica da cidade de São Paulo.",
+        imagem: "https://www.sabornamesa.com.br/media/k2/items/cache/e3b77ed9dfcd6b2d642bc5580e2a8a89_XL.jpg"
+      },
+      {
+        titulo: "Hambúrguer Artesanal",
+        origem: "cidade",
+        descricao: "Carne suculenta, queijo, alface, tomate e pão brioche, estilo gourmet urbano.",
+        imagem: "https://cdn0.tudoreceitas.com/pt/posts/4/1/8/hamburguer_artesanal_simples_2814_orig.jpg"
+      }
+    ];
 
-  <section id="galeria">
-    <h2>Galeria de Fotos</h2>
-    <div class="fotos">
-      <img src="festa-junina-rodoviariaonline.jpg" alt="Quadrilha Junina">
-      <img src="comidas-festa-junina.jpg" alt="Comidas Típicas">
-      <img src="foto3.jpg" alt="Decoração Junina">
-    </div>
-  </section>
+    let filtroAtual = "todas";
 
-  <footer>
-    <p>&copy; 2025 Festa Junina </p>
-  </footer>
+    function renderizarReceitas() {
+      const container = document.getElementById("lista-receitas");
+      container.innerHTML = "";
+      const filtradas = filtroAtual === "todas" ? receitas : receitas.filter(r => r.origem === filtroAtual);
 
-  <script src="script.js"></script>
+      filtradas.forEach(r => {
+        const card = document.createElement("div");
+        card.className = `card ${r.origem}`;
+        card.innerHTML = `<img src="${r.imagem || ''}" alt="${r.titulo}"><h2>${r.titulo}</h2><small>Origem: ${r.origem}</small><p>${r.descricao}</p>`;
+        container.appendChild(card);
+      });
+    }
+
+    function filtrar(origem) {
+      filtroAtual = origem;
+      document.querySelectorAll("nav button").forEach(btn => btn.classList.remove("active"));
+      document.querySelector(`nav button[onclick="filtrar('${origem}')"]`).classList.add("active");
+      renderizarReceitas();
+    }
+
+    function adicionarReceita() {
+      const titulo = document.getElementById("titulo").value;
+      const descricao = document.getElementById("descricao").value;
+      const origem = document.getElementById("origem").value;
+      const imagem = document.getElementById("imagem").value;
+
+      if (!titulo || !descricao) {
+        alert("Preencha todos os campos.");
+        return;
+      }
+
+      receitas.push({ titulo, origem, descricao, imagem });
+      document.getElementById("titulo").value = "";
+      document.getElementById("descricao").value = "";
+      document.getElementById("imagem").value = "";
+      document.getElementById("origem").value = "campo";
+
+      renderizarReceitas();
+    }
+
+    renderizarReceitas();
+  </script>
 </body>
 </html>
